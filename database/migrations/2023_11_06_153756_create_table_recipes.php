@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->json('ingredients');
             $table->json('steps');
+            $table->json('images')->nullable();
             $table->string('author_email');
 
             $table->timestamps();

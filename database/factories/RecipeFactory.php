@@ -21,6 +21,12 @@ class RecipeFactory extends Factory
             ++$k;
         }
 
+        $images = [];
+        $k = 0;
+        while ($k < rand(1, 5)) {
+            $images[] = 'https://placekitten.com/' . rand(1, 5) * 100 . '/' . rand(1, 5) * 100;
+            ++$k;
+        }
         return [
             'name' => $name,
             'slug' => Str::slug($name) . '-' . Str::random(5),
@@ -28,6 +34,7 @@ class RecipeFactory extends Factory
             'description' => fake()->sentences(rand(3, 15), true),
             'ingredients' => $ingredients,
             'steps' => fake()->sentences(rand(5, 15)),
+            'images' => $images,
         ];
     }
 }

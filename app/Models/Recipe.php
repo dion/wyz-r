@@ -17,10 +17,18 @@ class Recipe extends Model
         'ingredients',
         'steps',
         'author_email',
+        'images',
     ];
 
     protected $casts = [
         'ingredients' => 'array',
         'steps' => 'array',
+        'images' => 'array',
     ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
 }
