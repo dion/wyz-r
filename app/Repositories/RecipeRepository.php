@@ -37,29 +37,17 @@ class RecipeRepository extends AbstractRepository implements RecipeRepositoryCon
     public function search(array $parameters, int $page = 1, int $limit = 15): LengthAwarePaginator
     {
         $email  = $parameters['author_email'] ?? null;
-        $keywords = $parameters['keywords'] ?? null;
         $ingredients = $parameters['ingredients'] ?? null;
 
-        $query = $this->model->newQuery();
+        $query = $this->model->newQuery()->with('ingredients');
         if (!empty($email)) {
             $query->where('author_email', $email);
         }
 
-        if (!empty($keywords)) {
-            foreach ($keywords as $keyword) {
-                $query->where(function (Builder $query) use ($keyword) {
-                    $query->where('name', 'like', "%{$keyword}%")
-                        ->orWhere('description', 'like', "%{$keyword}%")
-                        ->orWhere('ingredients', 'like', "%{$keyword}%")
-                        ->orWhere('steps', 'like', "%{$keyword}%");
-                });
-            }
-        }
-
         if (!empty($ingredients)) {
             foreach ($ingredients as $ingredient) {
-                $query->where(function (Builder $query) use ($ingredient) {
-                    $query->where('ingredients', 'like', "%{$ingredient}%");
+                $query->whereHas('ingredients', function (Builder $query) use ($ingredient) {
+                    $query->where('name', 'like', "%{$ingredient}%");
                 });
             }
         }

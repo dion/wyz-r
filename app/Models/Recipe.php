@@ -14,14 +14,12 @@ class Recipe extends Model
         'name',
         'slug',
         'description',
-        'ingredients',
         'steps',
         'author_email',
         'images',
     ];
 
     protected $casts = [
-        'ingredients' => 'array',
         'steps' => 'array',
         'images' => 'array',
     ];
@@ -31,4 +29,8 @@ class Recipe extends Model
         return 'slug';
     }
 
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class)->withPivot('qty', 'unit');
+    }
 }
