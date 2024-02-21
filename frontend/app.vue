@@ -1,8 +1,11 @@
 <template>
   <div>
     <h1 class="text-3xl font-bold underline">
-      Hello world!
+        Hello world!
     </h1>
-    <!-- <NuxtWelcome /> -->
+    <Item />
   </div>
 </template>
+<script>
+  import Item from '~/components/Item.vue';
+</script>
