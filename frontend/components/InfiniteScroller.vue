@@ -7,7 +7,6 @@
       </div>
       <div v-if="props.state.loading" class="text-center mx-auto p-2.5">Loading...</div>
     </div>
-
 </template>
   
 <script setup>
