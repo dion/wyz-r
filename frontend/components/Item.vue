@@ -20,6 +20,7 @@
 <script setup>
     import { ref } from "vue";
     import InfiniteScroller from '~/components/InfiniteScroller.vue';
+    import { fetchRecipes } from '~/services/recipeService';
 
     let recipes = ref([]);
     let page = 2;
@@ -33,9 +34,10 @@
       state.loading = true;
 
       try {
-         const url = page == 2 ? `http://localhost:8888/api/recipes?page=${page}&limit=10` : `http://localhost:8888/api/recipes?page=${page}` 
-         const response = await fetch(url);
-         const json = await response.json();
+         const pageNum = page == 2 ? 10 : 5; 
+         const response = await fetchRecipes(page, pageNum);
+
+         const json = await response;
          
          if (json.data.length > 1) {
                state.items = [...state.items, ...json.data];
