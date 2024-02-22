@@ -1,11 +1,5 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
-    <Item />
+    <NuxtPage />
   </div>
 </template>
-<script>
-  import Item from '~/components/Item.vue';
-</script>

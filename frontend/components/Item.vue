@@ -25,5 +25,4 @@
     
     console.log('recipes', recipes.value.data);
 //   TODO: add infinite scroll
-// TODO: add link to recipe/[slug] page
 </script>
