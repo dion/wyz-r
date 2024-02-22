@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto">
-         <InfiniteScroller :loadMore="customLoadMore" :state="state">
+         <InfiniteScroller :loadMore="customLoadMore">
             <template #default="{item}">
                <div class="max-w-md mx-auto bg-white shadow-md rounded-md overflow-hidden p-5">
                   <NuxtLink :to="`/recipes/${item.slug}`">
@@ -23,37 +23,14 @@
     import { fetchRecipes } from '~/services/recipeService';
     import { useRecipeStore } from '~/store/recipe';
 
-    let recipes = ref([]);
-    let page = 2;
-    const state = reactive({
-        items: [],
-        loading: false,
-        error: false
-    });
-    
-    const customLoadMore = async () => {
-      state.loading = true;
-      const limit = page <= 2 ? 10 : 5; 
+    const recipeStore = useRecipeStore();
 
-      const recipeStore = useRecipeStore();
-      recipeStore.setPage(page);
-      recipeStore.setLimit(limit);
-      //recipeStore.setAuthorEmail('example@example.com');
-      //recipeStore.setIngredient('ingredientName');
+    const customLoadMore = async () => {
+      recipeStore.loading = true;
 
       try {
          const response = await fetchRecipes();
-         const json = await response;
-
-         console.log('json', json);
-         if (json.data.length > 1) {
-               state.items = [...state.items, ...json.data];
-               state.loading = false;
-         }
-         page++;
-      } catch (error) {
-         state.error = true;
-      }
+      } catch (error) {}
     };
     
     const findFirstProtein = function(arr) {

@@ -26,8 +26,11 @@
         </div>
 
         <div class="col-span-1 flex items-end justify-end">
-          <button @click="updateSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+          <button @click="updateSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 mx-1.5">
             Filter
+          </button>
+          <button @click="resetSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-red-500 text-white rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 mx-1.5">
+            Reset
           </button>
         </div>
       </div>
@@ -42,32 +45,31 @@
 
   const authorEmail = ref('');
   const selectedIngredient = ref('');
+  const recipeStore = useRecipeStore();
   
   const updateSearchFilters = async () => {
-    console.log('updating search filters');
-    const recipeStore = useRecipeStore();
-    //recipeStore.setPage(page);
-    //recipeStore.setLimit(limit);
     if (authorEmail.value) {
-      console.log('authorEmail.value', authorEmail.value)
       recipeStore.setAuthorEmail(authorEmail.value);
     }
 
     if (selectedIngredient.value) {
-      console.log('selectedIngredient.value', selectedIngredient.value)
       recipeStore.setIngredient(selectedIngredient.value);
     }
 
-    // TODO: need recipes to be stored in the store, need to increment page number also, in the setter 
-    
+    recipeStore.resetRecipes();
     try {
       const response = await fetchRecipes();
-      // const json = await response;
-      // console.log('json', json);
-      //page++;
-    } catch (error) {
-      // state.error = true;
-    }
+    } catch (error) {}
+  }
+
+  const resetSearchFilters = async () => {
+    recipeStore.resetRecipes();
+
+    authorEmail.value = '';
+    selectedIngredient.value = '';
+
+    try {
+      const response = await fetchRecipes();
+    } catch (error) {}
   }
 </script>
-  

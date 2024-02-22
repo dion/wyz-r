@@ -8,7 +8,10 @@ export const useRecipeStore = defineStore({
     page: 1,
     limit: 10,
     authorEmail: '',
-    ingredient: ''
+    ingredient: '',
+    items: [],
+    loading: false,
+    error: false
   }),
   getters: {
     getPage() {
@@ -22,12 +25,26 @@ export const useRecipeStore = defineStore({
     },
     getIngredient() {
       return this.ingredient;
+    },
+    getRecipes() {
+        return this.items;
+    },
+    getLoading() {
+        return this.loading;
     }
   },
   actions: {
+    resetRecipes() {
+        this.items = [];
+        this.page = 1;
+        this.authorEmail = '';
+        this.ingredient = '';
+    },
+    setRecipes(recipes) {
+        this.items.push(...recipes);
+    },
     setPage(page) {
-      // TODO: add logic if page number < 2 then setLimit(10)
-      this.page = page++;
+      this.page = page;
     },
     setLimit(limit) {
       this.limit = limit;
@@ -37,6 +54,9 @@ export const useRecipeStore = defineStore({
     },
     setIngredient(ingredient) {
       this.ingredient = ingredient;
+    },
+    setLoading(status) {
+      this.loading = status;
     }
   }
 });

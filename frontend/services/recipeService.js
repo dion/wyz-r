@@ -6,6 +6,8 @@ const BASE_URL = 'http://localhost:8888/api/recipes';
 export async function fetchRecipes() {
   const recipeStore = useRecipeStore();
 
+  recipeStore.setLoading(true);
+
   try {
     const url = new URL(BASE_URL);
     url.searchParams.append('page', recipeStore.page.toString());
@@ -23,13 +25,14 @@ export async function fetchRecipes() {
       throw new Error('Failed to fetch recipes');
     }
 
-    // TODO: need recipes to be stored in the store
-    // if (json.data.length > 1) {
-    //     state.items = [...state.items, ...json.data];
-    //     state.loading = false;
-    // }
+    const json = await response.json();
+    if (json.data.length > 1) {
+        recipeStore.setRecipes(json.data);
+        recipeStore.setLoading(false);
+        recipeStore.setPage(parseInt(recipeStore.page, 10) + 1);
+    }
 
-    return await response.json();
+    return json;
   } catch (error) {
     throw new Error('Error fetching recipes');
   }
