@@ -1,28 +1,53 @@
 <template>
     <div class="container mx-auto">
-      <div class="columns-3xs gap-8 space-y-8">
-        <div v-for="(item, index) in recipes.data" :key="index" class="max-w-md mx-auto bg-white shadow-md rounded-md overflow-hidden">
-            <a :href="`/recipe/${item.slug}`">
-                <div>
-                    <h2>{{ item.name }}</h2>
-                    <p>{{ item.slug }}</p>
-                    <p>{{ item.author_email }}</p>
-                    <img :src="item.images[0]" />
-                    <p>{{ findFirstProtein(item.ingredients).name }}</p>
-                </div>
-            </a>
-        </div>
-      </div>
+         <InfiniteScroller :loadMore="customLoadMore" :state="state">
+            <template #default="{item}">
+               <div class="max-w-md mx-auto bg-white shadow-md rounded-md overflow-hidden p-5">
+                  <NuxtLink :to="`/recipes/${item.slug}`">
+                     <div>
+                        <h2 class="text-lg capitalize">{{ item.name }}</h2>
+                        <p class="text-xs">{{ item.author_email }}</p>
+                        <img :src="item.images[0]" class="mx-auto min-h-48 max-h-48 my-2.5" />
+                        <p><span class="font-semibold text-sm">Ingredient</span><br/>{{ findFirstProtein(item.ingredients).name }}</p>
+                     </div>
+                  </NuxtLink>
+               </div>
+            </template>
+         </InfiniteScroller>
     </div>
 </template>
   
 <script setup>
-    const { data: recipes, pending, error, refresh } = await useFetch('http://localhost:8888/api/recipes', {});
+    import { ref } from "vue";
+    import InfiniteScroller from '~/components/InfiniteScroller.vue';
 
+    let recipes = ref([]);
+    let page = 2;
+    const state = reactive({
+        items: [],
+        loading: false,
+        error: false
+    });
+    
+    const customLoadMore = async () => {
+      state.loading = true;
+
+      try {
+         const url = page == 2 ? `http://localhost:8888/api/recipes?page=${page}&limit=10` : `http://localhost:8888/api/recipes?page=${page}` 
+         const response = await fetch(url);
+         const json = await response.json();
+         
+         if (json.data.length > 1) {
+               state.items = [...state.items, ...json.data];
+               state.loading = false;
+         }
+         page++;
+      } catch (error) {
+         state.error = true;
+      }
+    };
+    
     const findFirstProtein = function(arr) {
         return arr.find(item => item.type === 'protein') || null;
     }
-    
-    console.log('recipes', recipes.value.data);
-//   TODO: add infinite scroll
 </script>
