@@ -21,6 +21,7 @@
     import { ref } from "vue";
     import InfiniteScroller from '~/components/InfiniteScroller.vue';
     import { fetchRecipes } from '~/services/recipeService';
+    import { useRecipeStore } from '~/store/recipe';
 
     let recipes = ref([]);
     let page = 2;
@@ -32,13 +33,19 @@
     
     const customLoadMore = async () => {
       state.loading = true;
+      const limit = page <= 2 ? 10 : 5; 
+
+      const recipeStore = useRecipeStore();
+      recipeStore.setPage(page);
+      recipeStore.setLimit(limit);
+      //recipeStore.setAuthorEmail('example@example.com');
+      //recipeStore.setIngredient('ingredientName');
 
       try {
-         const pageNum = page == 2 ? 10 : 5; 
-         const response = await fetchRecipes(page, pageNum);
-
+         const response = await fetchRecipes();
          const json = await response;
-         
+
+         console.log('json', json);
          if (json.data.length > 1) {
                state.items = [...state.items, ...json.data];
                state.loading = false;
