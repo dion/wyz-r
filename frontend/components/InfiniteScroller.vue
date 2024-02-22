@@ -32,7 +32,7 @@
       const bodyScrollHeight = documentElement.scrollHeight;
       const scrollTop = window.pageYOffset || documentElement.scrollTop || 0;
       
-      if (bodyScrollHeight - scrollTop <= windowHeight) {
+      if ((bodyScrollHeight - scrollTop) - 50 <= windowHeight) {
         debouncedFetch();
       }
     };
