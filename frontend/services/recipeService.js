@@ -37,3 +37,20 @@ export async function fetchRecipes() {
     throw new Error('Error fetching recipes');
   }
 }
+
+export async function fetchRecipe(slug) {
+  const recipeStore = useRecipeStore();
+
+  try {
+    const url = new URL(`${BASE_URL}/${slug.toString()} `);
+    const response = await fetch(url.toString());
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch recipes');
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw new Error('Error fetching recipe');
+  }
+}

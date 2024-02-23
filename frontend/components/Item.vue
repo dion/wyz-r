@@ -18,7 +18,6 @@
 </template>
   
 <script setup>
-    import { ref } from "vue";
     import InfiniteScroller from '~/components/InfiniteScroller.vue';
     import { fetchRecipes } from '~/services/recipeService';
     import { useRecipeStore } from '~/store/recipe';

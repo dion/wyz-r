@@ -1,6 +1,7 @@
 // store/recipe.js
 
 import { defineStore } from 'pinia';
+import { fetchRecipe } from '~/services/recipeService';
 
 export const useRecipeStore = defineStore({
   id: 'recipe',
@@ -35,13 +36,13 @@ export const useRecipeStore = defineStore({
   },
   actions: {
     resetRecipes() {
-        this.items = [];
-        this.page = 1;
-        this.authorEmail = '';
-        this.ingredient = '';
+      this.items = [];
+      this.page = 1;
+      this.authorEmail = '';
+      this.ingredient = '';
     },
     setRecipes(recipes) {
-        this.items.push(...recipes);
+      this.items.push(...recipes);
     },
     setPage(page) {
       this.page = page;
@@ -57,6 +58,27 @@ export const useRecipeStore = defineStore({
     },
     setLoading(status) {
       this.loading = status;
+    },
+    async findBySlug(slug) {
+      this.setLoading(true);
+      const existingItem = this.items.find(item => item.slug === slug);
+      
+      if (existingItem) {
+        this.setLoading(false);
+        return existingItem;
+      } else {
+        try {
+          const newItem = await fetchRecipe(slug);
+          this.setLoading(false);
+
+          return newItem;
+        } catch (error) {
+          this.setLoading(false);
+
+          console.error('Error fetching recipe by slug:', error);
+          throw new Error('Recipe not found');
+        }
+      }
     }
   }
 });
