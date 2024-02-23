@@ -2,5 +2,12 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: true,
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"]
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en'
+      }
+    }
+  }
 })
