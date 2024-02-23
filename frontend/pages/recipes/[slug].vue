@@ -2,16 +2,16 @@
     <div>
       <p @click="goBack" class="cursor-pointer underline font-medium">Go back to Recipes</p>
       <p v-if="getLoading">Loading...</p>
-      <div class="flex gap-11" v-if="recipe && recipe.name">
+      <div class="flex flex-col gap-4 md:flex-row md:gap-11" v-if="recipe && recipe.name">
         <!-- Left column (image) -->
-        <div class="w-1/2 p-4">
+        <div class="w-full md:w-1/2 p-4">
           <div v-if="recipe.images.length">
             <img :src="recipe.images[0]" class="mx-auto my-2.5" />
           </div>
         </div>
 
         <!-- Right column (text content) -->
-        <div class="w-1/2 p-4">
+        <div class="w-full md:w-1/2 p-4">
           <h2 class="text-6xl leading-normal capitalize">{{ recipe.name }}</h2>
           
           <p class="text-sm">By {{ recipe.author_email }}</p>
