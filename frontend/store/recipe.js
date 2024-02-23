@@ -65,13 +65,15 @@ export const useRecipeStore = defineStore({
       
       if (existingItem) {
         this.setLoading(false);
+
+        console.log('existingItem', existingItem);
         return existingItem;
       } else {
         try {
           const newItem = await fetchRecipe(slug);
           this.setLoading(false);
 
-          return newItem;
+          return newItem.data;
         } catch (error) {
           this.setLoading(false);
 
