@@ -1,6 +1,6 @@
 <template>
     <div>
-      <p @click="goBack" class="cursor-pointer underline font-medium">Go back to Recipes</p>
+      <p @click="goBack" class="cursor-pointer underline font-medium m-3">Go back to Recipes</p>
       <p v-if="getLoading">Loading...</p>
       <div class="flex flex-col gap-4 md:flex-row md:gap-11" v-if="recipe && recipe.name">
         <!-- Left column (image) -->
@@ -23,7 +23,7 @@
             <p class="font-semibold text-lg">Ingredients:</p>
             <ul class="list-disc list-inside">
               <li v-for="(item, index) in recipe.ingredients" :key="index" class="capitalize">{{ item.name }} ({{ item.qty }} {{ item.unit }}) <span v-if="item.type == 'protein'">- <span class="font-medium">${{ item.price }}</span></span> 
-                <button v-if="item.type == 'protein'" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1.5 px-1.5 ml-1.5 rounded text-xs">Add to Basket</button></li>
+                <button v-if="item.type == 'protein'" class="w-full	md:w-auto mb-2 md:mb-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-1.5 px-1.5 ml-1.5 rounded text-xs">Add to Basket</button></li>
             </ul>
           </div>
 
