@@ -28,10 +28,10 @@
           </div>
 
           <div class="col-span-1 flex items-end justify-end">
-            <button @click="updateSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 mx-1.5">
+            <button @click="updateSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 mx-1.5">
               Filter
             </button>
-            <button @click="resetSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-red-500 text-white rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 mx-1.5">
+            <button @click="resetSearchFilters" type="button" class="block w-full mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 mx-1.5">
               Reset
             </button>
           </div>
@@ -45,6 +45,14 @@
   import Item from '~/components/Item.vue';
   import { fetchRecipes } from '~/services/recipeService';
   import { useRecipeStore } from '~/store/recipe';
+
+  useSeoMeta({
+    title: 'Recipe Browser 3000',
+    ogTitle: 'Recipe Browser 3000',
+    description: 'Find all the amazing recipes to your hearts desire.',
+    ogDescription: 'Find all the amazing recipes to your hearts desire.',
+    ogImage: 'https://placekitten.com/500/500',
+  });
 
   const authorEmail = ref('');
   const selectedIngredient = ref('');

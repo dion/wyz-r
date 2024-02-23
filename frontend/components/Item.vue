@@ -7,7 +7,7 @@
                      <div>
                         <h2 class="text-lg capitalize">{{ item.name }}</h2>
                         <p class="text-xs">{{ item.author_email }}</p>
-                        <img :src="item.images[0]" class="mx-auto min-h-48 max-h-48 my-2.5" />
+                        <img :src="item.images[0]" class="mx-auto min-h-48 max-h-48 my-2.5" :alt="item.name" />
                         <p><span class="font-semibold text-sm">Ingredient</span><br/>{{ findFirstProtein(item.ingredients).name }}</p>
                      </div>
                   </NuxtLink>

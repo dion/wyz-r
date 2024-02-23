@@ -5,7 +5,7 @@
         <!-- Left column (image) -->
         <div class="w-full md:w-1/2 p-4">
           <div v-if="recipe.images.length">
-            <img :src="recipe.images[0]" class="mx-auto my-2.5" />
+            <img :src="recipe.images[0]" class="mx-auto my-2.5" :alt="recipe.name" />
           </div>
         </div>
 
@@ -34,7 +34,7 @@
           </div>
 
           <ul v-for="(image, index) in recipe.images" :key="index" class="inline-block">
-            <li class="mr-2"><img :src="image" class="max-h-28" /></li>
+            <li class="mr-2"><img :src="image" class="max-h-28" :alt="recipe.name" /></li>
           </ul>
 
         </div>
@@ -44,6 +44,9 @@
   
 <script setup>
   import { useRecipeStore } from '~/store/recipe';
+
+
+
   const route = useRoute();
   const router = useRouter();
   const recipe = ref(null);
@@ -55,6 +58,14 @@
 
   onMounted(async () => {
     recipe.value = await recipeStore.findBySlug(route.params.slug);
+
+    useSeoMeta({
+      title: recipe.value.name || 'Recipe Browser 3000',
+      ogTitle: recipe.value.name || 'Recipe Browser 3000',
+      description: recipe.value.description || 'Find all the amazing recipes to your hearts desire.',
+      ogDescription: recipe.value.description || 'Find all the amazing recipes to your hearts desire.',
+      ogImage: recipe.value.images[0] || 'https://placekitten.com/500/500',
+    });
   });
 </script>
   
