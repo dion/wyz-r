@@ -7,7 +7,10 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: 'en'
-      }
+      },
+      link: [
+        { rel: 'dns-prefetch', href: 'https://placekitten.com' }
+      ]
     }
   }
 })
