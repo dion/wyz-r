@@ -51,6 +51,8 @@
   const recipeStore = useRecipeStore();
   
   const updateSearchFilters = async () => {
+    recipeStore.resetRecipes();
+
     if (authorEmail.value) {
       recipeStore.setAuthorEmail(authorEmail.value);
     }
@@ -59,7 +61,6 @@
       recipeStore.setIngredient(selectedIngredient.value);
     }
 
-    recipeStore.resetRecipes();
     try {
       const response = await fetchRecipes();
     } catch (error) {}
