@@ -5,7 +5,7 @@
         <!-- Left column (image) -->
         <div class="w-full md:w-1/2 p-4">
           <div v-if="recipe.images.length">
-            <img :src="recipe.images[0]" class="mx-auto my-2.5" width="300" :alt="recipe.name" />
+            <NuxtImg format="webp" loading="lazy" :src="recipe.images[0]" class="mx-auto my-2.5" width="300" :alt="recipe.name" />
           </div>
         </div>
 
@@ -34,7 +34,7 @@
           </div>
 
           <ul v-for="(image, index) in recipe.images" :key="index" class="inline-block">
-            <li class="mr-2"><img :src="image" class="max-h-28" height="112" :alt="recipe.name" /></li>
+            <li class="mr-2"><NuxtImg format="webp" loading="lazy" :src="image" class="max-h-28" height="112" :alt="recipe.name" /></li>
           </ul>
 
         </div>
