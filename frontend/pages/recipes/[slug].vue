@@ -1,7 +1,6 @@
 <template>
     <div>
       <p @click="goBack" class="cursor-pointer underline font-medium m-3">Go back to Recipes</p>
-      <p v-if="getLoading">Loading...</p>
       <div class="flex flex-col gap-4 md:flex-row md:gap-11" v-if="recipe && recipe.name">
         <!-- Left column (image) -->
         <div class="w-full md:w-1/2 p-4">
@@ -48,9 +47,7 @@
   const route = useRoute();
   const router = useRouter();
   const recipe = ref(null);
-
   const recipeStore = useRecipeStore();
-  const { getLoading } = storeToRefs(recipeStore);
   
   const goBack = () => {
     router.push('/');
