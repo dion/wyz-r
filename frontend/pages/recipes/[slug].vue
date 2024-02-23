@@ -20,17 +20,18 @@
           </p>
 
           <div class="mb-8">
-            <p class="font-semibold text-lg">Steps:</p>
-            <ol v-for="(step, index) in recipe.steps" :key="index" class="">
-              <li>{{ step }}</li>
-            </ol>
+            <p class="font-semibold text-lg">Ingredients:</p>
+            <ul class="list-disc list-inside">
+              <li v-for="(item, index) in recipe.ingredients" :key="index" class="capitalize">{{ item.name }} ({{ item.qty }} {{ item.unit }}) <span v-if="item.type == 'protein'">- <span class="font-medium">${{ item.price }}</span></span> 
+                <button v-if="item.type == 'protein'" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1.5 px-1.5 ml-1.5 rounded text-xs">Add to Basket</button></li>
+            </ul>
           </div>
 
           <div class="mb-8">
-            <p class="font-semibold text-lg">Ingredients:</p>
-            <ul v-for="(item, index) in recipe.ingredients" :key="index" class="item">
-              <li>{{ item.name }} - {{ item.qty }} {{ item.unit }} <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1.5 px-1.5 rounded text-xs">Add to Basket</button></li>
-            </ul>
+            <p class="font-semibold text-lg">Steps:</p>
+            <ol class="list-decimal list-inside">
+              <li v-for="(step, index) in recipe.steps" :key="index">{{ step }}</li>
+            </ol>
           </div>
 
           <ul v-for="(image, index) in recipe.images" :key="index" class="inline-block">
